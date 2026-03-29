@@ -41,7 +41,7 @@ const Hero = () => {
               Request Early Access
             </a>
             <a
-              href="#product"
+              href="#sample-brief"
               className="font-body text-sm text-primary hover:text-foreground transition-colors group"
             >
               See a sample brief{" "}

@@ -38,6 +38,7 @@ const FeaturesSection = () => {
 
   return (
     <section
+      id="capabilities"
       ref={ref}
       className={`py-24 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
     >

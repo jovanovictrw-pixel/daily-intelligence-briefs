@@ -3,6 +3,7 @@ import Hero from "@/components/vesper/Hero";
 import LogosBar from "@/components/vesper/LogosBar";
 import ProblemSection from "@/components/vesper/ProblemSection";
 import HowItWorks from "@/components/vesper/HowItWorks";
+import SampleBriefSection from "@/components/vesper/SampleBriefSection";
 import FeaturesSection from "@/components/vesper/FeaturesSection";
 import IntegrationsSection from "@/components/vesper/IntegrationsSection";
 import SocialProof from "@/components/vesper/SocialProof";
@@ -17,6 +18,7 @@ const Index = () => {
       <LogosBar />
       <ProblemSection />
       <HowItWorks />
+      <SampleBriefSection />
       <FeaturesSection />
       <IntegrationsSection />
       <SocialProof />

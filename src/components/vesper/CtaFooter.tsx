@@ -62,9 +62,20 @@ const CtaFooter = () => {
 
             {/* Links */}
             <div className="flex flex-wrap items-center gap-6">
-              {["Product", "Integrations", "Pricing", "Customers", "Privacy", "Terms"].map((l) => (
-                <a key={l} href="#" className="font-body text-xs text-muted-foreground hover:text-foreground transition-colors">
-                  {l}
+              {[
+                { label: "Product", href: "#product" },
+                { label: "Sample", href: "#sample-brief" },
+                { label: "Capabilities", href: "#capabilities" },
+                { label: "Integrations", href: "#integrations" },
+                { label: "Pricing", href: "#pricing" },
+                { label: "Customers", href: "#customers" },
+              ].map((l) => (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  className="font-body text-xs text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {l.label}
                 </a>
               ))}
             </div>
