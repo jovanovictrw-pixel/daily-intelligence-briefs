@@ -112,7 +112,7 @@ const Navbar = () => {
           >
             <span className="relative z-10">Request Briefing</span>
             <div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/20 to-transparent animate-shimmer bg-[length:200%_100%] opacity-0 group-hover:opacity-0"
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/20 to-transparent animate-shimmer bg-[length:200%_100%] opacity-0 group-hover:opacity-100"
               style={{ animationDelay: "0.5s" }}
             />
           </a>

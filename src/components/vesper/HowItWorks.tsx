@@ -1,4 +1,4 @@
-import { useScrollFadeIn } from "@/hooks/use-animations";
+import { useScrollStaggerIn } from "@/hooks/use-animations";
 
 const steps = [
   {
@@ -36,7 +36,7 @@ const steps = [
 ];
 
 const HowItWorks = () => {
-  const { ref, isVisible } = useScrollFadeIn();
+  const { ref, isVisible, itemStyle } = useScrollStaggerIn();
 
   return (
     <section
@@ -45,24 +45,43 @@ const HowItWorks = () => {
       className={`py-24 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
     >
       <div className="max-w-7xl mx-auto px-6">
-        <p className="section-label mb-6">02 — How It Works</p>
-        <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-foreground max-w-3xl mb-16">
+        <p
+          className={`section-label mb-6 transition-all duration-700 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+          }`}
+          style={itemStyle(0, 140)}
+        >
+          02 — How It Works
+        </p>
+        <h2
+          className={`font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-foreground max-w-3xl mb-16 transition-all duration-700 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+          }`}
+          style={itemStyle(1, 140)}
+        >
           Intelligence that finds your team — not the other way around.
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
           {/* Dashed connector line - hidden on mobile */}
-          <div className="hidden md:block absolute top-12 left-[20%] right-[20%] border-t border-dashed border-primary/30" />
+          <div className="hidden md:block absolute top-[52px] left-[16.66%] right-[16.66%] border-t border-dashed border-primary/30" />
 
           {steps.map((step, i) => (
             <div
               key={i}
-              className="relative bg-card border border-divider rounded-lg p-8 hover:border-primary/40 transition-all duration-300 hover:-translate-y-0.5"
+              className={`relative bg-card border border-divider rounded-lg p-8 hover:border-primary/40 transition-all duration-700 hover:-translate-y-0.5 ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`}
+              style={itemStyle(i + 2, 140)}
             >
-              <div className="text-primary mb-6">{step.icon}</div>
-              <p className="font-mono text-xs text-primary tracking-wider mb-2">{step.num}</p>
-              <h3 className="font-display text-xl text-foreground mb-3">{step.title}</h3>
-              <p className="font-body text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
+              <div className="text-primary mb-5 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full border border-divider bg-background/50 flex items-center justify-center">
+                  {step.icon}
+                </div>
+              </div>
+              <p className="font-mono-data text-xs text-primary tracking-wider mb-2 text-center">{step.num}</p>
+              <h3 className="font-display text-xl text-foreground mb-3 text-center">{step.title}</h3>
+              <p className="font-body text-sm text-muted-foreground leading-relaxed text-center">{step.desc}</p>
             </div>
           ))}
         </div>

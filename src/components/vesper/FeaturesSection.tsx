@@ -1,4 +1,4 @@
-import { useScrollFadeIn } from "@/hooks/use-animations";
+import { useScrollStaggerIn } from "@/hooks/use-animations";
 
 const features = [
   {
@@ -34,7 +34,7 @@ const features = [
 ];
 
 const FeaturesSection = () => {
-  const { ref, isVisible } = useScrollFadeIn();
+  const { ref, isVisible, itemStyle } = useScrollStaggerIn();
 
   return (
     <section
@@ -43,8 +43,20 @@ const FeaturesSection = () => {
       className={`py-24 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
     >
       <div className="max-w-7xl mx-auto px-6">
-        <p className="section-label mb-6">03 — Capabilities</p>
-        <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-foreground max-w-3xl mb-16">
+        <p
+          className={`section-label mb-6 transition-all duration-700 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+          }`}
+          style={itemStyle(0, 120)}
+        >
+          03 — Capabilities
+        </p>
+        <h2
+          className={`font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-foreground max-w-3xl mb-16 transition-all duration-700 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+          }`}
+          style={itemStyle(1, 120)}
+        >
           Built for teams who can't afford to be surprised.
         </h2>
 
@@ -52,7 +64,10 @@ const FeaturesSection = () => {
           {features.map((f, i) => (
             <div
               key={i}
-              className={`${f.span} bg-card border border-divider rounded-lg p-8 hover:border-primary/50 transition-all duration-300 hover:-translate-y-0.5 group`}
+              className={`${f.span} bg-card border border-divider rounded-lg p-8 hover:border-primary/50 transition-all duration-700 hover:-translate-y-0.5 group ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`}
+              style={itemStyle(i + 2, 90)}
             >
               <h3 className="font-display text-lg text-foreground mb-3 group-hover:text-primary transition-colors">
                 {f.title}

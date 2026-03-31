@@ -15,11 +15,11 @@ const LogosBar = () => {
           <p className="font-mono text-[11px] tracking-[0.15em] text-muted-foreground uppercase text-center mb-10">
             Trusted by intelligence-driven teams at
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
+          <div className="flex flex-wrap items-center justify-center gap-3">
             {logos.map((name) => (
               <span
                 key={name}
-                className="font-display text-lg sm:text-xl tracking-wide text-muted-foreground/40 select-none"
+                className="inline-flex items-center rounded-full border border-divider bg-card/40 px-4 py-2 font-mono-data text-xs tracking-[0.14em] uppercase text-muted-foreground select-none"
               >
                 {name}
               </span>
