@@ -1,10 +1,16 @@
 import { useEffect, useRef, useState } from "react";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
 export function useScrollFadeIn(threshold = 0.15) {
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      setIsVisible(true);
+      return;
+    }
     const el = ref.current;
     if (!el) return;
 
@@ -20,7 +26,7 @@ export function useScrollFadeIn(threshold = 0.15) {
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [threshold]);
+  }, [threshold, prefersReducedMotion]);
 
   return { ref, isVisible };
 }
@@ -29,6 +35,7 @@ export function useCountUp(end: number, duration = 2000, startOnVisible = false)
   const [count, setCount] = useState(0);
   const [started, setStarted] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (!startOnVisible) {
@@ -54,6 +61,10 @@ export function useCountUp(end: number, duration = 2000, startOnVisible = false)
 
   useEffect(() => {
     if (!started) return;
+    if (prefersReducedMotion) {
+      setCount(end);
+      return;
+    }
 
     let startTime: number;
     const animate = (timestamp: number) => {
@@ -66,7 +77,7 @@ export function useCountUp(end: number, duration = 2000, startOnVisible = false)
     };
 
     requestAnimationFrame(animate);
-  }, [started, end, duration]);
+  }, [started, end, duration, prefersReducedMotion]);
 
   return { count, ref };
 }

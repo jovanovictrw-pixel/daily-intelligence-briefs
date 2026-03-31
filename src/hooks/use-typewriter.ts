@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
 const lines = [
   { section: "Competitor Intel", items: [
@@ -23,8 +24,18 @@ export function useTypewriter(speed = 30, pauseBetweenSections = 2000) {
   const [currentItem, setCurrentItem] = useState(0);
   const [currentChar, setCurrentChar] = useState(0);
   const [displayedLines, setDisplayedLines] = useState<{ section: string; items: string[] }[]>([]);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
+    if (!prefersReducedMotion) return;
+    setDisplayedLines(lines);
+    setCurrentSection(lines.length);
+    setCurrentItem(0);
+    setCurrentChar(0);
+  }, [prefersReducedMotion]);
+
+  useEffect(() => {
+    if (prefersReducedMotion) return;
     const section = lines[currentSection];
     if (!section) {
       // Reset after pause
@@ -77,5 +88,5 @@ export function useTypewriter(speed = 30, pauseBetweenSections = 2000) {
     }
   }, [currentSection, currentItem, currentChar, speed, pauseBetweenSections]);
 
-  return { displayedLines, isTyping: currentSection < lines.length };
+  return { displayedLines, isTyping: !prefersReducedMotion && currentSection < lines.length };
 }

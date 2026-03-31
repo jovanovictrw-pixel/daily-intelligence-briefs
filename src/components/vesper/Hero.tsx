@@ -36,13 +36,13 @@ const Hero = () => {
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <a
               href="#cta"
-              className="font-body text-sm font-semibold px-7 py-3 bg-primary text-primary-foreground rounded-sm hover:bg-primary/90 transition-colors"
+              className="font-body text-sm font-semibold px-7 py-3 bg-primary text-primary-foreground rounded-sm hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               Request Early Access
             </a>
             <a
               href="#sample-brief"
-              className="font-body text-sm text-primary hover:text-foreground transition-colors group"
+              className="font-body text-sm text-primary hover:text-foreground transition-colors group rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               See a sample brief{" "}
               <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
