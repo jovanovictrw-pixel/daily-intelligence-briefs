@@ -20,9 +20,9 @@ function IntegrationMark({ name }: { name: string }) {
 
   if (name === "Salesforce") {
     return (
-      <div className={boxBase} aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="#00A1E0" className={svgBase}>
-          <path d="M10.003 4.56c.937-1 2.25-1.56 3.5-1.56 1.69 0 3.19.875 4.063 2.25.687-.312 1.437-.5 2.25-.5 3 0 5.187 2.5 5.187 5.5 0 3.063-2.375 5.5-5.375 5.5H6.625C3.563 15.75 1 13.25 1 10.125 1 7.25 3.063 4.875 5.813 4.5c.562-1.875 2.312-3.5 4.19-3.5z" />
+      <div className="w-10 h-10 rounded-lg bg-[#00A1E0]/10 flex items-center justify-center shrink-0" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="#00A1E0">
+          <path d="M9.615 18.648a4.243 4.243 0 0 1-2.867-1.12 4.243 4.243 0 0 1-1.32-2.797 5.31 5.31 0 0 1-2.823-1.736 5.31 5.31 0 0 1 .482-7.148A5.266 5.266 0 0 1 6.63 4.56a5.33 5.33 0 0 1 3.98-1.81 5.33 5.33 0 0 1 3.979 1.81 5.266 5.266 0 0 1 3.543 1.287 5.31 5.31 0 0 1 .482 7.148 5.31 5.31 0 0 1-2.823 1.736 4.243 4.243 0 0 1-1.32 2.797 4.243 4.243 0 0 1-2.856 1.12z"/>
         </svg>
       </div>
     );
@@ -30,9 +30,9 @@ function IntegrationMark({ name }: { name: string }) {
 
   if (name === "HubSpot") {
     return (
-      <div className={boxBase} aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="#FF7A59" className={svgBase}>
-          <path d="M22.006 9.386a3.948 3.948 0 0 0-3.198-3.864v-1.7A2.064 2.064 0 0 0 20.044 2a2.072 2.072 0 0 0-2.072-2 2.072 2.072 0 0 0-2.072 2c0 .822.49 1.534 1.198 1.858v1.68a3.947 3.947 0 0 0-2.396 1.264L7.428 2.308a2.945 2.945 0 0 0 .08-.666 2.964 2.964 0 0 0-2.962-2.964A2.964 2.964 0 0 0 1.584 1.64 2.964 2.964 0 0 0 4.546 4.6c.546 0 1.056-.15 1.496-.41l7.202 4.412a3.94 3.94 0 0 0-.466 1.84 3.95 3.95 0 0 0 .612 2.126L10.9 15.06a2.5 2.5 0 0 0-.748-.118 2.52 2.52 0 0 0-2.516 2.518 2.52 2.52 0 0 0 2.516 2.518 2.52 2.52 0 0 0 2.516-2.518c0-.298-.056-.582-.15-.848l2.468-2.97a3.946 3.946 0 0 0 4.82-5.256z" />
+      <div className="w-10 h-10 rounded-lg bg-[#FF7A59]/10 flex items-center justify-center shrink-0" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="#FF7A59">
+          <path d="M18.164 7.93V5.084a1.56 1.56 0 0 0 .898-1.407V3.62a1.56 1.56 0 0 0-1.56-1.56h-.056a1.56 1.56 0 0 0-1.56 1.56v.056a1.56 1.56 0 0 0 .898 1.408V7.93a4.43 4.43 0 0 0-2.114 1.038L7.395 4.9a1.743 1.743 0 1 0-.802.949l6.91 4.029a4.434 4.434 0 0 0-.597 2.219 4.44 4.44 0 0 0 .668 2.34l-1.83 1.83a1.425 1.425 0 0 0-.42-.064 1.44 1.44 0 1 0 1.44 1.44 1.425 1.425 0 0 0-.064-.42l1.812-1.812a4.44 4.44 0 0 0 2.686.9 4.452 4.452 0 1 0-1.033-8.381z"/>
         </svg>
       </div>
     );
@@ -40,9 +40,9 @@ function IntegrationMark({ name }: { name: string }) {
 
   if (name === "Gmail") {
     return (
-      <div className={boxBase} aria-hidden="true">
-        <svg viewBox="0 0 24 24" className={svgBase}>
-          <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" fill="#EA4335" />
+      <div className="w-10 h-10 rounded-lg bg-[#EA4335]/10 flex items-center justify-center shrink-0" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20">
+          <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L12 9.548l8.073-6.055C21.69 2.28 24 3.434 24 5.457z" fill="#EA4335"/>
         </svg>
       </div>
     );
@@ -60,9 +60,9 @@ function IntegrationMark({ name }: { name: string }) {
 
   if (name === "Linear") {
     return (
-      <div className={boxBase} aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="#5E6AD2" className={svgBase}>
-          <path d="M.464 13.838L10.16 23.535a12.018 12.018 0 0 1-9.696-9.697zM0 11.08L12.92 24a12.022 12.022 0 0 1-1.6.107A12.025 12.025 0 0 1 0 12.508V11.08zM1.35 6.54l16.11 16.11A12.054 12.054 0 0 1 13.92 24L0 10.08V7.893c.426-.463.888-.9 1.35-1.353zM4.71 3.18l16.11 16.11a12.075 12.075 0 0 1-3.538 1.35L3.18 4.53c.482-.478.985-.924 1.53-1.35zM7.893 1.35l14.758 14.758a12.044 12.044 0 0 1-1.354 3.537L6.54 4.882c.43-.56.888-1.082 1.353-1.532zm4.188-1.35a12.025 12.025 0 0 1 9.92 9.92L12.08 0zm2.828.464L24 9.919v1.6A12.022 12.022 0 0 1 23.893 13L13.508 0z" />
+      <div className="w-10 h-10 rounded-lg bg-[#5E6AD2]/10 flex items-center justify-center shrink-0" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="#5E6AD2">
+          <path d="M3.464 15.425 .003 3.536 3.536.003l11.89 3.46-11.962 11.962zm.452 1.39L18.013 2.72l3.268 3.268L7.183 20.084l-3.267-3.268zM8.29 20.999l3.267 3.268 11.444-4.708-6.736-6.737L8.29 20.999zm4.196 2.357-3.016-3.017 7.573-7.572 3.016 3.016-7.573 7.573z"/>
         </svg>
       </div>
     );
@@ -70,10 +70,9 @@ function IntegrationMark({ name }: { name: string }) {
 
   if (name === "Gong") {
     return (
-      <div className={boxBase} aria-hidden="true">
-        <svg viewBox="0 0 24 24" stroke="#FF4F00" fill="none" strokeWidth="2" strokeLinecap="round" className={svgBase}>
-          <path d="M2 12c0-2.5 1.5-4 3.5-4s3.5 1.5 3.5 4-1.5 4-3.5 4S2 14.5 2 12z" />
-          <path d="M15 8v8M19 6v12M23 10v4" />
+      <div className="w-10 h-10 rounded-lg bg-[#FF4F00]/10 flex items-center justify-center shrink-0" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="#FF4F00">
+          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 4a8 8 0 1 1 0 16A8 8 0 0 1 12 4zm0 2a6 6 0 1 0 0 12A6 6 0 0 0 12 6zm0 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm0 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
         </svg>
       </div>
     );
@@ -81,10 +80,10 @@ function IntegrationMark({ name }: { name: string }) {
 
   // ZoomInfo
   return (
-    <div className={boxBase} aria-hidden="true">
-      <svg viewBox="0 0 24 24" className={svgBase}>
-        <rect x="2" y="2" width="20" height="20" rx="3" fill="#003057" />
-        <path d="M7 8h10L7 16h10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+    <div className="w-10 h-10 rounded-lg bg-[#003057]/30 flex items-center justify-center shrink-0" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+        <rect x="1" y="1" width="22" height="22" rx="4" fill="#003057"/>
+        <path d="M6 7.5h12L6 16.5h12" stroke="#00AEEF" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     </div>
   );
