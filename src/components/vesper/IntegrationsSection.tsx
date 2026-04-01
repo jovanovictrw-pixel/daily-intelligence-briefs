@@ -1,16 +1,15 @@
 import { useScrollStaggerIn } from "@/hooks/use-animations";
 
 const integrations = [
-  { name: "Slack",       logo: "https://cdn.simpleicons.org/slack/E01E5A" },
-  { name: "Salesforce",  logo: "https://cdn.simpleicons.org/salesforce/00A1E0" },
-  { name: "HubSpot",     logo: "https://cdn.simpleicons.org/hubspot/FF7A59" },
-  { name: "Gmail",       logo: "https://cdn.simpleicons.org/gmail/EA4335" },
-  { name: "Notion",      logo: "https://cdn.simpleicons.org/notion/ffffff" },
-  { name: "Linear",      logo: "https://cdn.simpleicons.org/linear/5E6AD2" },
-  { name: "Gong",        logo: "https://cdn.simpleicons.org/gong/FF4F00" },
-  { name: "ZoomInfo",    logo: "https://cdn.simpleicons.org/zoominfo/00AEEF" },
+  { name: "Slack",      logo: "https://logo.clearbit.com/slack.com",      domain: "slack.com" },
+  { name: "Salesforce", logo: "https://logo.clearbit.com/salesforce.com", domain: "salesforce.com" },
+  { name: "HubSpot",    logo: "https://logo.clearbit.com/hubspot.com",    domain: "hubspot.com" },
+  { name: "Gmail",      logo: "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico", domain: "gmail.com" },
+  { name: "Notion",     logo: "https://logo.clearbit.com/notion.so",      domain: "notion.so" },
+  { name: "Linear",     logo: "https://logo.clearbit.com/linear.app",     domain: "linear.app" },
+  { name: "Gong",       logo: "https://logo.clearbit.com/gong.io",        domain: "gong.io" },
+  { name: "ZoomInfo",   logo: "https://logo.clearbit.com/zoominfo.com",   domain: "zoominfo.com" },
 ];
-
 
 const IntegrationsSection = () => {
   const { ref, isVisible, itemStyle } = useScrollStaggerIn();
@@ -56,8 +55,19 @@ const IntegrationsSection = () => {
               <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 bg-muted">
                 <img
                   src={integration.logo}
-                  alt={integration.name}
-                  className="w-6 h-6 object-contain"
+                  alt={`${integration.name} logo`}
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (!target.src.includes("google.com/s2/favicons")) {
+                      target.src = `https://www.google.com/s2/favicons?domain=${integration.domain}&sz=64`;
+                    }
+                  }}
+                  style={{
+                    width: "32px",
+                    height: "32px",
+                    borderRadius: "6px",
+                    objectFit: "contain",
+                  }}
                 />
               </div>
               <span className="font-body text-sm text-foreground">{integration.name}</span>
