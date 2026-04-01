@@ -9,8 +9,6 @@ import IntegrationsSection from "@/components/vesper/IntegrationsSection";
 import SocialProof from "@/components/vesper/SocialProof";
 import PricingSection from "@/components/vesper/PricingSection";
 import CtaFooter from "@/components/vesper/CtaFooter";
-import TransitionDivider from "@/components/vesper/TransitionDivider";
-
 
 const Index = () => {
   return (
@@ -18,7 +16,6 @@ const Index = () => {
       <Navbar />
       <main>
         <Hero />
-        <TransitionDivider />
         <LogosBar />
         <ProblemSection />
         <HowItWorks />
