@@ -27,55 +27,40 @@ const stats = [
 ];
 
 /* ─── inject keyframes once ─────────────────────────────────────────────── */
-const STYLE_ID = "problem-section-styles-v2";
+const STYLE_ID = "problem-section-styles-v3";
 function injectStyles() {
   if (typeof document === "undefined") return;
   if (document.getElementById(STYLE_ID)) return;
   const el = document.createElement("style");
   el.id = STYLE_ID;
   el.textContent = `
-    /* scanline drift */
-    @keyframes problemScan {
+    @keyframes probScan {
       0%   { top: -2px; }
       100% { top: 100%; }
     }
-
-    /* count-up fade */
-    @keyframes problemFadeUp {
+    @keyframes probFadeUp {
       from { opacity: 0; transform: translateY(12px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
-    /* infinity pulse */
-    @keyframes problemInfinityPulse {
-      0%, 100% { opacity: 0.4; }
+    @keyframes probInfPulse {
+      0%, 100% { opacity: 0.45; }
       50%       { opacity: 1; }
     }
-
-    /* headline line reveals */
-    @keyframes problemLineReveal {
+    @keyframes probLineReveal {
       from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
-    .prob-line-1 {
-      opacity: 0;
+    .prob-line-1 { opacity: 0; }
+    .prob-line-1.prob-vis {
+      animation: probLineReveal 0.7s cubic-bezier(0.22,1,0.36,1) 0.2s forwards;
     }
-    .prob-line-1.prob-visible {
-      animation: problemLineReveal 0.7s cubic-bezier(0.22,1,0.36,1) 0.2s forwards;
+    .prob-line-2 { opacity: 0; }
+    .prob-line-2.prob-vis {
+      animation: probLineReveal 0.7s cubic-bezier(0.22,1,0.36,1) 0.42s forwards;
     }
-    .prob-line-2 {
-      opacity: 0;
-    }
-    .prob-line-2.prob-visible {
-      animation: problemLineReveal 0.7s cubic-bezier(0.22,1,0.36,1) 0.45s forwards;
-    }
-
-    .prob-stat-row {
-      opacity: 0;
-    }
-    .prob-stat-row.prob-visible {
-      animation: problemFadeUp 0.6s cubic-bezier(0.22,1,0.36,1) forwards;
+    .prob-stat { opacity: 0; }
+    .prob-stat.prob-vis {
+      animation: probFadeUp 0.55s cubic-bezier(0.22,1,0.36,1) forwards;
     }
   `;
   document.head.appendChild(el);
@@ -143,28 +128,28 @@ function TimelineStat({
     prefersReducedMotion
   );
 
-  const displayValue = isInfinity
-    ? stat.displayText
-    : `${count}${stat.suffix}`;
-
-  const visibleClass = isVisible && !prefersReducedMotion ? " prob-visible" : "";
-  const delay = `${0.5 + index * 0.18}s`;
+  const displayValue = isInfinity ? stat.displayText : `${count}${stat.suffix}`;
+  const visClass = isVisible && !prefersReducedMotion ? " prob-vis" : "";
+  const delay = `${0.55 + index * 0.18}s`;
 
   return (
     <div
       ref={ref}
-      className={`prob-stat-row${visibleClass}`}
+      className={`prob-stat${visClass}`}
       style={
-        isVisible && !prefersReducedMotion ? { animationDelay: delay } : undefined
+        isVisible && !prefersReducedMotion
+          ? { animationDelay: delay }
+          : isVisible
+          ? { opacity: 1 }
+          : undefined
       }
     >
-      {/* diamond + number row */}
-      <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem" }}>
-        {/* diamond bullet on the line */}
+      {/* diamond + number */}
+      <div style={{ display: "flex", alignItems: "baseline", gap: "0.6rem" }}>
         <span
           style={{
             color: "rgba(180,140,60,1)",
-            fontSize: "0.55rem",
+            fontSize: "0.5rem",
             lineHeight: 1,
             flexShrink: 0,
             position: "relative",
@@ -173,17 +158,16 @@ function TimelineStat({
         >
           ◆
         </span>
-
-        {/* number */}
         <p
           className="font-display"
           style={{
-            fontSize: "clamp(2.5rem, 5vw, 3.5rem)",
+            fontSize: "clamp(2.2rem, 4.5vw, 3.2rem)",
             lineHeight: 1,
             color: "rgba(180,140,60,1)",
             letterSpacing: "-0.02em",
+            margin: 0,
             animation: isInfinity
-              ? "problemInfinityPulse 3s ease-in-out infinite"
+              ? "probInfPulse 3s ease-in-out infinite"
               : undefined,
           }}
         >
@@ -191,15 +175,16 @@ function TimelineStat({
         </p>
       </div>
 
-      {/* label */}
+      {/* description */}
       <p
         style={{
-          marginTop: "0.5rem",
-          paddingLeft: "1.25rem",
-          fontSize: "0.78rem",
-          lineHeight: 1.6,
-          color: "rgba(255,255,255,0.45)",
+          marginTop: "0.45rem",
+          paddingLeft: "1.1rem",
+          fontSize: "0.75rem",
+          lineHeight: 1.65,
+          color: "rgba(255,255,255,0.42)",
           fontFamily: "var(--font-body, sans-serif)",
+          margin: "0.45rem 0 0 1.1rem",
         }}
       >
         {stat.label}
@@ -229,7 +214,7 @@ const ProblemSection = () => {
     return () => obs.disconnect();
   }, []);
 
-  const visibleClass = isVisible && !prefersReducedMotion ? " prob-visible" : "";
+  const visClass = isVisible && !prefersReducedMotion ? " prob-vis" : "";
 
   return (
     <section
@@ -237,24 +222,36 @@ const ProblemSection = () => {
       style={{
         position: "relative",
         overflow: "hidden",
-        paddingTop: "7rem",
-        paddingBottom: "7rem",
         background: "#0a0a0a",
       }}
     >
-      {/* ── diagonal right-side gold tint via clip-path ── */}
+      {/* ── layer 0: diagonal right-side tint ── */}
       <div
         aria-hidden
         style={{
           position: "absolute",
           inset: 0,
-          background: "#1a1500",
+          background: "#12100a",
           clipPath: "polygon(62% 0%, 100% 0%, 100% 100%, 48% 100%)",
+          zIndex: 0,
           pointerEvents: "none",
         }}
       />
 
-      {/* ── animated scanline ── */}
+      {/* ── layer 0: dot grid ── */}
+      <div
+        aria-hidden
+        className="dot-grid-bg"
+        style={{
+          position: "absolute",
+          inset: 0,
+          opacity: 0.12,
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* ── layer 1: scanline (above bg, below content) ── */}
       {!prefersReducedMotion && (
         <div
           aria-hidden
@@ -265,135 +262,123 @@ const ProblemSection = () => {
             height: "1px",
             background: "rgba(180,140,60,1)",
             opacity: 0.06,
-            animation: "problemScan 6s linear infinite",
+            animation: "probScan 6s linear infinite",
+            zIndex: 1,
             pointerEvents: "none",
-            zIndex: 2,
           }}
         />
       )}
 
-      {/* ── dot grid faint overlay ── */}
+      {/* ── layer 2: all content ── */}
       <div
-        aria-hidden
-        className="absolute inset-0 dot-grid-bg"
-        style={{ opacity: 0.12, pointerEvents: "none" }}
-      />
-
-      {/* ── vertical spine label ── */}
-      <div
-        aria-hidden
         style={{
-          position: "absolute",
-          left: 0,
-          top: 0,
-          bottom: 0,
-          width: "2.5rem",
+          position: "relative",
+          zIndex: 2,
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          zIndex: 3,
+          alignItems: "stretch",
+          padding: "7.5rem 5rem 7.5rem 0",
         }}
       >
-        <p
-          style={{
-            transform: "rotate(-90deg)",
-            whiteSpace: "nowrap",
-            fontSize: "0.6rem",
-            letterSpacing: "0.25em",
-            textTransform: "uppercase",
-            color: "rgba(180,140,60,0.7)",
-            fontFamily: "var(--font-body, sans-serif)",
-            fontWeight: 500,
-            userSelect: "none",
-          }}
-        >
-          01 — The Problem
-        </p>
-      </div>
-
-      {/* ── main content, offset to clear the spine ── */}
-      <div
-        style={{
-          maxWidth: "88rem",
-          margin: "0 auto",
-          paddingLeft: "clamp(4rem, 6vw, 6rem)",
-          paddingRight: "clamp(1.5rem, 4vw, 3rem)",
-        }}
-      >
+        {/* LEFT SPINE — rotated label */}
         <div
+          aria-hidden
           style={{
+            width: "3.5rem",
+            flexShrink: 0,
             display: "flex",
-            flexDirection: "row",
             alignItems: "center",
-            gap: "clamp(2rem, 6vw, 6rem)",
-            flexWrap: "wrap",
+            justifyContent: "center",
           }}
         >
-          {/* LEFT — headline block (55%) */}
-          <div style={{ flex: "0 0 55%", minWidth: "min(100%, 420px)" }}>
-            {/* line 1 — filled white */}
-            <h2
-              className={`font-display prob-line-1${visibleClass}`}
-              style={{
-                fontSize: "clamp(2rem, 4.5vw, 3.6rem)",
-                fontWeight: 400,
-                lineHeight: 1.15,
-                color: "#ffffff",
-                marginBottom: "0.15em",
-              }}
-            >
-              Your competitors move fast.
-            </h2>
-
-            {/* line 2 — gold outline only */}
-            <h2
-              className={`font-display prob-line-2${visibleClass}`}
-              style={{
-                fontSize: "clamp(2rem, 4.5vw, 3.6rem)",
-                fontWeight: 400,
-                lineHeight: 1.15,
-                color: "transparent",
-                WebkitTextStroke: "1px rgba(180,140,60,0.9)",
-                marginBottom: 0,
-              }}
-            >
-              Your team is still catching up.
-            </h2>
-          </div>
-
-          {/* RIGHT — vertical timeline (45%) */}
-          <div
+          <p
             style={{
-              flex: "1 1 260px",
-              display: "flex",
-              gap: 0,
+              transform: "rotate(-90deg)",
+              whiteSpace: "nowrap",
+              fontSize: "0.58rem",
+              letterSpacing: "0.25em",
+              textTransform: "uppercase",
+              color: "rgba(180,140,60,0.65)",
+              fontFamily: "var(--font-body, sans-serif)",
+              fontWeight: 500,
+              userSelect: "none",
             }}
           >
-            {/* the vertical gold line */}
-            <div
-              aria-hidden
-              style={{
-                width: "1px",
-                background: "rgba(180,140,60,0.4)",
-                flexShrink: 0,
-                marginRight: "1.5rem",
-                alignSelf: "stretch",
-                minHeight: "100%",
-              }}
-            />
+            01 — The Problem
+          </p>
+        </div>
 
-            {/* stats column */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "2rem", flex: 1 }}>
-              {stats.map((stat, i) => (
-                <TimelineStat
-                  key={i}
-                  stat={stat}
-                  index={i}
-                  isVisible={isVisible}
-                  prefersReducedMotion={prefersReducedMotion}
-                />
-              ))}
-            </div>
+        {/* CENTER — headline */}
+        <div
+          style={{
+            flex: "0 0 52%",
+            minWidth: 0,
+            paddingRight: "3rem",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          {/* line 1 — filled white */}
+          <h2
+            className={`font-display prob-line-1${visClass}`}
+            style={{
+              fontSize: "clamp(1.9rem, 4vw, 3.4rem)",
+              fontWeight: 400,
+              lineHeight: 1.18,
+              color: "#ffffff",
+              margin: "0 0 0.1em 0",
+            }}
+          >
+            Your competitors move fast.
+          </h2>
+
+          {/* line 2 — gold outline only */}
+          <h2
+            className={`font-display prob-line-2${visClass}`}
+            style={{
+              fontSize: "clamp(1.9rem, 4vw, 3.4rem)",
+              fontWeight: 400,
+              lineHeight: 1.18,
+              color: "transparent",
+              WebkitTextStroke: "1px rgba(180,140,60,0.85)",
+              margin: 0,
+            }}
+          >
+            Your team is still catching up.
+          </h2>
+        </div>
+
+        {/* RIGHT — vertical timeline */}
+        <div
+          style={{
+            flex: 1,
+            minWidth: 0,
+            display: "flex",
+            gap: 0,
+          }}
+        >
+          {/* vertical gold rule */}
+          <div
+            aria-hidden
+            style={{
+              width: "1px",
+              background: "rgba(180,140,60,0.38)",
+              flexShrink: 0,
+              marginRight: "1.75rem",
+            }}
+          />
+
+          {/* stat rows */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "2.25rem", flex: 1 }}>
+            {stats.map((stat, i) => (
+              <TimelineStat
+                key={i}
+                stat={stat}
+                index={i}
+                isVisible={isVisible}
+                prefersReducedMotion={prefersReducedMotion}
+              />
+            ))}
           </div>
         </div>
       </div>
