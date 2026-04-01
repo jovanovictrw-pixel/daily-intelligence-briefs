@@ -42,8 +42,12 @@ const HowItWorks = () => {
     <section
       id="product"
       ref={ref}
-      className={`py-24 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+      className={`relative py-24 overflow-hidden transition-all duration-700 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+      }`}
     >
+      <div className="absolute inset-0 bg-card/10" />
+
       <div className="max-w-7xl mx-auto px-6">
         <p
           className={`section-label mb-6 transition-all duration-700 ${
@@ -64,7 +68,7 @@ const HowItWorks = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
           {/* Dashed connector line - hidden on mobile */}
-          <div className="hidden md:block absolute top-[52px] left-[16.66%] right-[16.66%] border-t border-dashed border-primary/30" />
+          <div className="hidden md:block absolute top-[56px] left-[16.66%] right-[16.66%] border-t border-dashed border-primary/30" />
 
           {steps.map((step, i) => (
             <div
