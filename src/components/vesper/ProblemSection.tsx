@@ -27,7 +27,7 @@ const stats = [
 ];
 
 /* ─── animation styles (injected once into head) ────────────────────────── */
-const STYLE_ID = "v-problem-section-animations";
+const STYLE_ID = "v-problem-section-animations-v6";
 function injectStyles() {
   if (typeof document === "undefined" || document.getElementById(STYLE_ID)) return;
   const style = document.createElement("style");
@@ -124,9 +124,19 @@ const ProblemSection = () => {
   return (
     <section style={{ position: "relative", background: "#0a0a0a", padding: "140px 80px", overflow: "hidden" }}>
       
-      {/* Glow Layer */}
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "100%", zIndex: 0, pointerEvents: "none", background: "radial-gradient(ellipse 60% 40% at 50% 0%, rgba(180, 140, 60, 0.08) 0%, transparent 70%)" }} />
+      {/* ── Vertical Color Transition Layer ── */}
+      <div 
+        aria-hidden
+        style={{ 
+          position: "absolute", 
+          inset: 0, 
+          zIndex: 0, 
+          pointerEvents: "none", 
+          background: "linear-gradient(to bottom, #0a0a0a 0%, rgba(180, 140, 60, 0.15) 35%, rgba(180, 140, 60, 0.08) 55%, #0a0a0a 100%)"
+        }} 
+      />
 
+      {/* Content Wrapper */}
       <div style={{ position: "relative", zIndex: 1, maxWidth: "1400px", margin: "0 auto", display: "grid", gridTemplateColumns: "minmax(400px, 4fr) 3fr 3fr", gap: "64px", alignItems: "start" }}>
         
         {/* COL 1: Headline Block */}
@@ -138,7 +148,7 @@ const ProblemSection = () => {
             </p>
             <h2 className="font-display" style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", lineHeight: 1.1, color: "#fff", fontWeight: 400, margin: 0 }}>
               Your competitors move fast.
-              <span style={{ display: "block", color: "transparent", WebkitTextStroke: "1px rgba(180, 140, 60, 0.9)" }}>
+              <span style={{ display: "block", color: "rgba(180, 140, 60, 1)" }}>
                 Your team is still catching up.
               </span>
             </h2>
