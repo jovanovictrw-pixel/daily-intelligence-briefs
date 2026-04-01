@@ -1,14 +1,14 @@
 import { useScrollStaggerIn } from "@/hooks/use-animations";
 
 const integrations = [
-  { name: "Slack",       logo: "https://logo.clearbit.com/slack.com" },
-  { name: "Salesforce",  logo: "https://logo.clearbit.com/salesforce.com" },
-  { name: "HubSpot",     logo: "https://logo.clearbit.com/hubspot.com" },
-  { name: "Gmail",       logo: "https://logo.clearbit.com/gmail.com" },
-  { name: "Notion",      logo: "https://logo.clearbit.com/notion.so" },
-  { name: "Linear",      logo: "https://logo.clearbit.com/linear.app" },
-  { name: "Gong",        logo: "https://logo.clearbit.com/gong.io" },
-  { name: "ZoomInfo",    logo: "https://logo.clearbit.com/zoominfo.com" },
+  { name: "Slack",       logo: "https://cdn.simpleicons.org/slack/E01E5A" },
+  { name: "Salesforce",  logo: "https://cdn.simpleicons.org/salesforce/00A1E0" },
+  { name: "HubSpot",     logo: "https://cdn.simpleicons.org/hubspot/FF7A59" },
+  { name: "Gmail",       logo: "https://cdn.simpleicons.org/gmail/EA4335" },
+  { name: "Notion",      logo: "https://cdn.simpleicons.org/notion/ffffff" },
+  { name: "Linear",      logo: "https://cdn.simpleicons.org/linear/5E6AD2" },
+  { name: "Gong",        logo: "https://cdn.simpleicons.org/gong/FF4F00" },
+  { name: "ZoomInfo",    logo: "https://cdn.simpleicons.org/zoominfo/00AEEF" },
 ];
 
 
@@ -53,11 +53,11 @@ const IntegrationsSection = () => {
               }`}
               style={itemStyle(i + 2, 80)}
             >
-              <div className="w-10 h-10 rounded-lg overflow-hidden flex items-center justify-center shrink-0 bg-white">
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 bg-muted">
                 <img
                   src={integration.logo}
                   alt={integration.name}
-                  className="w-8 h-8 object-contain"
+                  className="w-6 h-6 object-contain"
                 />
               </div>
               <span className="font-body text-sm text-foreground">{integration.name}</span>
