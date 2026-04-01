@@ -26,46 +26,6 @@ const stats = [
   },
 ];
 
-/* ─── inject keyframes once ─────────────────────────────────────────────── */
-const STYLE_ID = "problem-section-styles-v3";
-function injectStyles() {
-  if (typeof document === "undefined") return;
-  if (document.getElementById(STYLE_ID)) return;
-  const el = document.createElement("style");
-  el.id = STYLE_ID;
-  el.textContent = `
-    @keyframes probScan {
-      0%   { top: -2px; }
-      100% { top: 100%; }
-    }
-    @keyframes probFadeUp {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes probInfPulse {
-      0%, 100% { opacity: 0.45; }
-      50%       { opacity: 1; }
-    }
-    @keyframes probLineReveal {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .prob-line-1 { opacity: 0; }
-    .prob-line-1.prob-vis {
-      animation: probLineReveal 0.7s cubic-bezier(0.22,1,0.36,1) 0.2s forwards;
-    }
-    .prob-line-2 { opacity: 0; }
-    .prob-line-2.prob-vis {
-      animation: probLineReveal 0.7s cubic-bezier(0.22,1,0.36,1) 0.42s forwards;
-    }
-    .prob-stat { opacity: 0; }
-    .prob-stat.prob-vis {
-      animation: probFadeUp 0.55s cubic-bezier(0.22,1,0.36,1) forwards;
-    }
-  `;
-  document.head.appendChild(el);
-}
-
 /* ─── count-up hook ─────────────────────────────────────────────────────── */
 function useCountUp(
   end: number,
@@ -83,7 +43,10 @@ function useCountUp(
     if (!el) return;
     const obs = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) { setStarted(true); obs.unobserve(el); }
+        if (entry.isIntersecting) {
+          setStarted(true);
+          obs.unobserve(el);
+        }
       },
       { threshold: 0.3 }
     );
@@ -93,7 +56,10 @@ function useCountUp(
 
   useEffect(() => {
     if (!started) return;
-    if (prefersReducedMotion) { setCount(end); return; }
+    if (prefersReducedMotion) {
+      setCount(end);
+      return;
+    }
     let startTime = 0;
     const animate = (ts: number) => {
       if (!startTime) startTime = ts;
@@ -108,16 +74,12 @@ function useCountUp(
   return { count, ref };
 }
 
-/* ─── single timeline stat ──────────────────────────────────────────────── */
-function TimelineStat({
+/* ─── stat card ─────────────────────────────────────────────────────────── */
+function StatCard({
   stat,
-  index,
-  isVisible,
   prefersReducedMotion,
 }: {
   stat: typeof stats[number];
-  index: number;
-  isVisible: boolean;
   prefersReducedMotion: boolean;
 }) {
   const isInfinity = !!stat.displayText;
@@ -129,259 +91,307 @@ function TimelineStat({
   );
 
   const displayValue = isInfinity ? stat.displayText : `${count}${stat.suffix}`;
-  const visClass = isVisible && !prefersReducedMotion ? " prob-vis" : "";
-  const delay = `${0.55 + index * 0.18}s`;
 
   return (
     <div
       ref={ref}
-      className={`prob-stat${visClass}`}
-      style={
-        isVisible && !prefersReducedMotion
-          ? { animationDelay: delay }
-          : isVisible
-          ? { opacity: 1 }
-          : undefined
-      }
+      className="group transition-colors duration-300"
+      style={{
+        borderLeft: "1px solid rgba(180, 140, 60, 0.8)",
+        paddingLeft: "20px",
+        paddingTop: "12px",
+        paddingBottom: "12px",
+      }}
     >
-      {/* diamond + number */}
-      <div style={{ display: "flex", alignItems: "baseline", gap: "0.6rem" }}>
-        <span
-          style={{
-            color: "rgba(180,140,60,1)",
-            fontSize: "0.5rem",
-            lineHeight: 1,
-            flexShrink: 0,
-            position: "relative",
-            top: "-1px",
-          }}
-        >
-          ◆
-        </span>
-        <p
-          className="font-display"
-          style={{
-            fontSize: "clamp(2.2rem, 4.5vw, 3.2rem)",
-            lineHeight: 1,
-            color: "rgba(180,140,60,1)",
-            letterSpacing: "-0.02em",
-            margin: 0,
-            animation: isInfinity
-              ? "probInfPulse 3s ease-in-out infinite"
-              : undefined,
-          }}
-        >
-          {displayValue}
-        </p>
-      </div>
+      {/* Background Hover Effect */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+        style={{ background: "rgba(180, 140, 60, 0.05)", zIndex: -1 }}
+      />
 
-      {/* description */}
+      <p
+        className="font-display"
+        style={{
+          fontSize: "2.5rem",
+          color: "rgba(180, 140, 60, 1)",
+          lineHeight: 1,
+          marginBottom: "0.5rem",
+        }}
+      >
+        {displayValue}
+      </p>
       <p
         style={{
-          marginTop: "0.45rem",
-          paddingLeft: "1.1rem",
-          fontSize: "0.75rem",
-          lineHeight: 1.65,
-          color: "rgba(255,255,255,0.42)",
+          fontSize: "0.8rem",
+          color: "#888",
+          lineHeight: 1.5,
           fontFamily: "var(--font-body, sans-serif)",
-          margin: "0.45rem 0 0 1.1rem",
+          maxWidth: "200px",
         }}
       >
         {stat.label}
       </p>
+
+      <style jsx>{`
+        div {
+          position: relative;
+        }
+      `}</style>
     </div>
   );
 }
 
 /* ─── main section ──────────────────────────────────────────────────────── */
 const ProblemSection = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
-
-  useEffect(() => { injectStyles(); }, []);
-
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) { setIsVisible(true); obs.unobserve(el); }
-      },
-      { threshold: 0.08 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  const visClass = isVisible && !prefersReducedMotion ? " prob-vis" : "";
 
   return (
     <section
-      ref={sectionRef}
       style={{
         position: "relative",
-        overflow: "hidden",
         background: "#0a0a0a",
+        padding: "140px 80px",
+        overflow: "hidden",
       }}
     >
-      {/* ── layer 0: diagonal right-side tint ── */}
+      {/* ── Layer 0: Ambient Glow ── */}
       <div
         aria-hidden
         style={{
           position: "absolute",
-          inset: 0,
-          background: "#12100a",
-          clipPath: "polygon(62% 0%, 100% 0%, 100% 100%, 48% 100%)",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "100%",
+          background:
+            "radial-gradient(ellipse 60% 40% at 50% 0%, rgba(180,140,60,0.08) 0%, transparent 70%)",
           zIndex: 0,
           pointerEvents: "none",
         }}
       />
 
-      {/* ── layer 0: dot grid ── */}
-      <div
-        aria-hidden
-        className="dot-grid-bg"
-        style={{
-          position: "absolute",
-          inset: 0,
-          opacity: 0.12,
-          zIndex: 0,
-          pointerEvents: "none",
-        }}
-      />
-
-      {/* ── layer 1: scanline (above bg, below content) ── */}
-      {!prefersReducedMotion && (
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            height: "1px",
-            background: "rgba(180,140,60,1)",
-            opacity: 0.06,
-            animation: "probScan 6s linear infinite",
-            zIndex: 1,
-            pointerEvents: "none",
-          }}
-        />
-      )}
-
-      {/* ── layer 2: all content ── */}
+      {/* ── Layer 1: Content ── */}
       <div
         style={{
           position: "relative",
-          zIndex: 2,
-          display: "flex",
-          alignItems: "stretch",
-          padding: "7.5rem 5rem 7.5rem 0",
+          zIndex: 1,
+          maxWidth: "1400px",
+          margin: "0 auto",
+          display: "grid",
+          gridTemplateColumns: "minmax(400px, 4fr) 3fr 3fr",
+          gap: "60px",
+          alignItems: "start",
         }}
       >
-        {/* LEFT SPINE — rotated label */}
-        <div
-          aria-hidden
-          style={{
-            width: "3.5rem",
-            flexShrink: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <p
-            style={{
-              transform: "rotate(-90deg)",
-              whiteSpace: "nowrap",
-              fontSize: "0.58rem",
-              letterSpacing: "0.25em",
-              textTransform: "uppercase",
-              color: "rgba(180,140,60,0.65)",
-              fontFamily: "var(--font-body, sans-serif)",
-              fontWeight: 500,
-              userSelect: "none",
-            }}
-          >
-            01 — The Problem
-          </p>
-        </div>
-
-        {/* CENTER — headline */}
-        <div
-          style={{
-            flex: "0 0 52%",
-            minWidth: 0,
-            paddingRight: "3rem",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-          }}
-        >
-          {/* line 1 — filled white */}
-          <h2
-            className={`font-display prob-line-1${visClass}`}
-            style={{
-              fontSize: "clamp(1.9rem, 4vw, 3.4rem)",
-              fontWeight: 400,
-              lineHeight: 1.18,
-              color: "#ffffff",
-              margin: "0 0 0.1em 0",
-            }}
-          >
-            Your competitors move fast.
-          </h2>
-
-          {/* line 2 — gold outline only */}
-          <h2
-            className={`font-display prob-line-2${visClass}`}
-            style={{
-              fontSize: "clamp(1.9rem, 4vw, 3.4rem)",
-              fontWeight: 400,
-              lineHeight: 1.18,
-              color: "transparent",
-              WebkitTextStroke: "1px rgba(180,140,60,0.85)",
-              margin: 0,
-            }}
-          >
-            Your team is still catching up.
-          </h2>
-        </div>
-
-        {/* RIGHT — vertical timeline */}
-        <div
-          style={{
-            flex: 1,
-            minWidth: 0,
-            display: "flex",
-            gap: 0,
-          }}
-        >
-          {/* vertical gold rule */}
+        {/* COLUMN 1: Headline Block */}
+        <div style={{ display: "flex", gap: "24px" }}>
+          {/* Vertical Accent Bar */}
           <div
             aria-hidden
             style={{
-              width: "1px",
-              background: "rgba(180,140,60,0.38)",
+              width: "2px",
+              height: "60px",
+              background: "rgba(180, 140, 60, 1)",
+              marginTop: "56px",
               flexShrink: 0,
-              marginRight: "1.75rem",
             }}
           />
 
-          {/* stat rows */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "2.25rem", flex: 1 }}>
-            {stats.map((stat, i) => (
-              <TimelineStat
-                key={i}
-                stat={stat}
-                index={i}
-                isVisible={isVisible}
-                prefersReducedMotion={prefersReducedMotion}
+          <div>
+            <p
+              style={{
+                fontSize: "0.7rem",
+                letterSpacing: "0.3em",
+                textTransform: "uppercase",
+                color: "rgba(180, 140, 60, 1)",
+                fontFamily: "var(--font-body, sans-serif)",
+                fontWeight: 600,
+                marginBottom: "1.5rem",
+              }}
+            >
+              01 — The Problem
+            </p>
+            <h2
+              className="font-display"
+              style={{
+                fontSize: "clamp(2.5rem, 4.5vw, 3.8rem)",
+                lineHeight: 1.1,
+                color: "#ffffff",
+                marginBottom: "0.2em",
+                fontWeight: 400,
+              }}
+            >
+              Your competitors move fast.
+              <span
+                style={{
+                  display: "block",
+                  color: "transparent",
+                  WebkitTextStroke: "1px rgba(180, 140, 60, 0.9)",
+                }}
+              >
+                Your team is still catching up.
+              </span>
+            </h2>
+            <p
+              style={{
+                fontSize: "0.9rem",
+                color: "#888",
+                fontFamily: "var(--font-body, sans-serif)",
+                lineHeight: 1.6,
+                marginTop: "1.5rem",
+              }}
+            >
+              Vesper surfaces what your team is missing — before it costs you
+              the deal.
+            </p>
+          </div>
+        </div>
+
+        {/* COLUMN 2: Decorative Tech Element */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            paddingTop: "40px",
+          }}
+        >
+          {/* Circuit Schematic SVG */}
+          <svg
+            width="100"
+            height="180"
+            viewBox="0 0 100 180"
+            fill="none"
+            style={{ opacity: 0.8 }}
+          >
+            <path
+              d="M50 0V180"
+              stroke="rgba(180, 140, 60, 0.4)"
+              strokeWidth="1"
+            />
+            {/* Branch 1 */}
+            <g className="schematic-branch">
+              <path
+                d="M50 40H80"
+                stroke="rgba(180, 140, 60, 0.4)"
+                strokeWidth="1"
               />
+              <circle
+                cx="84"
+                cy="40"
+                r="3"
+                stroke="rgba(180, 140, 60, 0.5)"
+                strokeWidth="1"
+                fill="none"
+              />
+            </g>
+            {/* Branch 2 */}
+            <g className="schematic-branch">
+              <path
+                d="M50 90H20"
+                stroke="rgba(180, 140, 60, 0.4)"
+                strokeWidth="1"
+              />
+              <circle
+                cx="16"
+                cy="90"
+                r="3"
+                stroke="rgba(180, 140, 60, 0.5)"
+                strokeWidth="1"
+                fill="none"
+              />
+            </g>
+            {/* Branch 3 */}
+            <g className="schematic-branch">
+              <path
+                d="M50 140H80"
+                stroke="rgba(180, 140, 60, 0.4)"
+                strokeWidth="1"
+              />
+              <circle
+                cx="84"
+                cy="140"
+                r="3"
+                stroke="rgba(180, 140, 60, 0.5)"
+                strokeWidth="1"
+                fill="none"
+              />
+            </g>
+          </svg>
+
+          {/* Monospace Readout */}
+          <div
+            style={{
+              marginTop: "40px",
+              fontFamily: "monospace",
+              fontSize: "11px",
+              color: "rgba(180, 140, 60, 0.6)",
+              width: "200px",
+              borderTop: "1px solid rgba(180, 140, 60, 0.15)",
+            }}
+          >
+            {[
+              { label: "SIGNAL LATENCY", val: "0.4ms" },
+              { label: "SOURCES ACTIVE", val: "847" },
+              { label: "LAST SYNC", val: "00:00:03 ago" },
+            ].map((item, idx) => (
+              <div
+                key={idx}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  padding: "8px 0",
+                  borderBottom: "1px solid rgba(180, 140, 60, 0.15)",
+                }}
+              >
+                <span>{item.label}</span>
+                <span>→ {item.val}</span>
+              </div>
             ))}
           </div>
         </div>
+
+        {/* COLUMN 3: Stats Block */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "16px",
+            paddingTop: "20px",
+          }}
+        >
+          {stats.map((stat, i) => (
+            <StatCard
+              key={i}
+              stat={stat}
+              prefersReducedMotion={prefersReducedMotion}
+            />
+          ))}
+        </div>
       </div>
+
+      <style jsx>{`
+        @keyframes glowPulse {
+          0%,
+          100% {
+            filter: drop-shadow(0 0 2px rgba(180, 140, 60, 0.3));
+            opacity: 0.6;
+          }
+          50% {
+            filter: drop-shadow(0 0 6px rgba(180, 140, 60, 0.8));
+            opacity: 1;
+          }
+        }
+        .schematic-branch {
+          animation: glowPulse 3s ease-in-out infinite;
+        }
+        .schematic-branch:nth-child(2) {
+          animation-delay: 1s;
+        }
+        .schematic-branch:nth-child(3) {
+          animation-delay: 2s;
+        }
+      `}</style>
     </section>
   );
 };
