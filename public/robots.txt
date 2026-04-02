@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vesperintel.com/sitemap.xml
+Sitemap: https://daily-intelligence-briefs.vercel.app/sitemap.xml
