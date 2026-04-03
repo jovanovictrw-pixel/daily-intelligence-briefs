@@ -12,6 +12,10 @@ export default {
         "2xl": "1400px",
       },
     },
+    screens: {
+      'sm': '641px',
+      'lg': '1025px',
+    },
     extend: {
       fontFamily: {
         display: ['"Playfair Display"', 'serif'],

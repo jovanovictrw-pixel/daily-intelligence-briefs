@@ -41,12 +41,12 @@ const CtaFooter = () => {
       <section
         id="cta"
         ref={ref}
-        className={`relative py-32 overflow-hidden transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+        className={`relative fluid-py overflow-hidden transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
       >
         {/* Radial gold glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-primary/[0.08] rounded-full blur-[150px]" />
 
-        <div className="relative max-w-3xl mx-auto px-6 text-center">
+        <div className="relative max-w-3xl mx-auto fluid-px text-center">
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-foreground mb-6">
             Start your team's first briefing.
           </h2>
@@ -106,8 +106,8 @@ const CtaFooter = () => {
 
       {/* Footer */}
       <footer className="border-t border-divider py-12">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="max-w-7xl mx-auto fluid-px">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-8">
             {/* Logo */}
             <div className="flex items-center gap-2.5">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-primary">

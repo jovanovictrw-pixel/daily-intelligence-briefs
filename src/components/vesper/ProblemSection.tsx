@@ -122,76 +122,91 @@ const ProblemSection = () => {
   useEffect(() => { injectStyles(); }, []);
 
   return (
-    <section style={{ position: "relative", background: "#0a0a0a", padding: "140px 80px", overflow: "hidden" }}>
+    <section className="relative bg-[#0a0a0a] overflow-hidden fluid-padding">
       
       {/* ── Vertical Color Transition Layer ── */}
       <div 
         aria-hidden
+        className="absolute inset-0 z-0 pointer-events-none"
         style={{ 
-          position: "absolute", 
-          inset: 0, 
-          zIndex: 0, 
-          pointerEvents: "none", 
           background: "linear-gradient(to bottom, #0a0a0a 0%, rgba(180, 140, 60, 0.15) 35%, rgba(180, 140, 60, 0.08) 55%, #0a0a0a 100%)"
         }} 
       />
 
       {/* Content Wrapper */}
-      <div style={{ position: "relative", zIndex: 1, maxWidth: "1400px", margin: "0 auto", display: "grid", gridTemplateColumns: "minmax(400px, 4fr) 3fr 3fr", gap: "64px", alignItems: "start" }}>
+      <div className="relative z-10 max-w-[1400px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[minmax(400px,4fr)_3fr_3fr] gap-12 lg:gap-16 items-start">
         
-        {/* COL 1: Headline Block */}
-        <div style={{ display: "flex", gap: "28px" }}>
-          <div style={{ width: "2px", height: "60px", background: "rgba(180, 140, 60, 1)", marginTop: "58px", flexShrink: 0 }} />
-          <div>
-            <p style={{ fontSize: "0.72rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(180, 140, 60, 1)", fontWeight: 600, marginBottom: "1.5rem", fontFamily: "var(--font-body, sans-serif)" }}>
+        {/* COL 1: Headline Block - order 1 on mobile */}
+        <div className="flex gap-7 order-1">
+          <div className="hidden sm:block w-[2px] h-[60px] bg-primary mt-[58px] shrink-0" />
+          <div className="w-full">
+            <p className="font-mono-data text-[0.72rem] tracking-[0.3em] uppercase text-primary font-semibold mb-6">
               01 — The Problem
             </p>
-            <h2 className="font-display" style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", lineHeight: 1.1, color: "#fff", fontWeight: 400, margin: 0 }}>
+            <h2 className="font-display text-[clamp(2.5rem,5vw,4rem)] leading-[1.1] text-white font-normal m-0 italic sm:not-italic">
               Your competitors move fast.
-              <span style={{ display: "block", color: "rgba(180, 140, 60, 1)" }}>
+              <span className="block text-primary">
                 Your team is still catching up.
               </span>
             </h2>
-            <p style={{ fontSize: "0.95rem", color: "#888", lineHeight: 1.6, marginTop: "1.5rem", fontFamily: "var(--font-body, sans-serif)", maxWidth: "480px" }}>
+            <p className="font-body text-[0.95rem] text-muted-foreground leading-relaxed mt-6 max-w-[480px]">
               Vesper surfaces what your team is missing — before it costs you the deal.
             </p>
           </div>
         </div>
 
-        {/* COL 2: Schematic */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", paddingTop: "40px" }}>
-          <svg width="100" height="180" viewBox="0 0 100 180" fill="none" style={{ opacity: 0.8 }}>
-            <path d="M50 0V180" stroke="rgba(180, 140, 60, 0.35)" strokeWidth="1" />
-            <g className="circuit-branch" style={{ animationDelay: "0s" }}>
-              <path d="M50 40H80" stroke="rgba(180, 140, 60, 0.35)" strokeWidth="1" />
-              <circle cx="84" cy="40" r="3.5" stroke="rgba(180, 140, 60, 0.5)" strokeWidth="1" fill="none" />
-            </g>
-            <g className="circuit-branch" style={{ animationDelay: "1s" }}>
-              <path d="M50 90H20" stroke="rgba(180, 140, 60, 0.35)" strokeWidth="1" />
-              <circle cx="16" cy="90" r="3.5" stroke="rgba(180, 140, 60, 0.5)" strokeWidth="1" fill="none" />
-            </g>
-            <g className="circuit-branch" style={{ animationDelay: "2s" }}>
-              <path d="M50 140H80" stroke="rgba(180, 140, 60, 0.35)" strokeWidth="1" />
-              <circle cx="84" cy="140" r="3.5" stroke="rgba(180, 140, 60, 0.5)" strokeWidth="1" fill="none" />
-            </g>
-          </svg>
+        {/* COL 2: Schematic - hidden on tablet, visible on desktop as middle col, last on mobile */}
+        <div className="hidden lg:flex flex-col items-center pt-10 order-3 lg:order-none">
+          <div className="relative flex flex-col items-center">
+            <svg width="100" height="180" viewBox="0 0 100 180" fill="none" className="opacity-80">
+              <path d="M50 0V180" stroke="rgba(180, 140, 60, 0.35)" strokeWidth="1" />
+              <g className="circuit-branch" style={{ animationDelay: "0s" }}>
+                <path d="M50 40H80" stroke="rgba(180, 140, 60, 0.35)" strokeWidth="1" />
+                <circle cx="84" cy="40" r="3.5" stroke="rgba(180, 140, 60, 0.5)" strokeWidth="1" fill="none" />
+              </g>
+              <g className="circuit-branch" style={{ animationDelay: "1s" }}>
+                <path d="M50 90H20" stroke="rgba(180, 140, 60, 0.35)" strokeWidth="1" />
+                <circle cx="16" cy="90" r="3.5" stroke="rgba(180, 140, 60, 0.5)" strokeWidth="1" fill="none" />
+              </g>
+              <g className="circuit-branch" style={{ animationDelay: "2s" }}>
+                <path d="M50 140H80" stroke="rgba(180, 140, 60, 0.35)" strokeWidth="1" />
+                <circle cx="84" cy="140" r="3.5" stroke="rgba(180, 140, 60, 0.5)" strokeWidth="1" fill="none" />
+              </g>
+            </svg>
 
-          <div style={{ marginTop: "40px", fontFamily: "monospace", fontSize: "11px", color: "rgba(180, 140, 60, 0.65)", width: "220px", borderTop: "1px solid rgba(180, 140, 60, 0.15)" }}>
-            {[
-              { l: "SIGNAL LATENCY", v: "0.4ms" },
-              { l: "SOURCES ACTIVE", v: "847" },
-              { l: "LAST SYNC", v: "00:00:03 ago" }
-            ].map((d, i) => (
-              <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "9px 0", borderBottom: "1px solid rgba(180, 140, 60, 0.15)" }}>
-                <span>{d.l}</span>
-                <span>→ {d.v}</span>
-              </div>
-            ))}
+            <div className="mt-10 font-mono text-[11px] text-primary/60 w-[220px] border-t border-primary/15">
+              {[
+                { l: "SIGNAL LATENCY", v: "0.4ms" },
+                { l: "SOURCES ACTIVE", v: "847" },
+                { l: "LAST SYNC", v: "00:00:03 ago" }
+              ].map((d, i) => (
+                <div key={i} className="flex justify-between py-2.5 border-b border-primary/15">
+                  <span>{d.l}</span>
+                  <span>→ {d.v}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* COL 3: Stats */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "16px", paddingTop: "24px" }}>
+        {/* Schematic for mobile view (different order/placement if desired, but user said readout at bottom) */}
+        <div className="flex lg:hidden flex-col items-center pt-8 order-3 sm:hidden">
+           {/* Same SVG and readout as above for mobile-only display if we want it stacked at bottom */}
+           <div className="font-mono text-[10px] text-primary/50 w-full max-w-[280px] border-t border-primary/10">
+              {[
+                { l: "SIGNAL LATENCY", v: "0.4ms" },
+                { l: "SOURCES ACTIVE", v: "847" }
+              ].map((d, i) => (
+                <div key={i} className="flex justify-between py-2 border-b border-primary/10">
+                  <span>{d.l}</span>
+                  <span>{d.v}</span>
+                </div>
+              ))}
+            </div>
+        </div>
+
+        {/* COL 3: Stats - order 2 on mobile, right col on tablet */}
+        <div className="flex flex-col gap-4 pt-6 order-2 sm:order-none sm:pt-24 lg:pt-6">
           {stats.map((s, i) => <StatCard key={i} stat={s} prefersReducedMotion={prefersReducedMotion} />)}
         </div>
 

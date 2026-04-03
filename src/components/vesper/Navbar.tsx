@@ -46,13 +46,13 @@ const Navbar = () => {
           </span>
         </div>
 
-        {/* Nav Links - hidden on mobile */}
-        <div className="hidden md:flex items-center gap-8">
+        {/* Nav Links - hidden on mobile, visible on tablet/desktop */}
+        <div className="hidden sm:flex items-center gap-4 lg:gap-8">
           {desktopLinks.map((link) => (
             <a
               key={link}
               href={`#${link.toLowerCase()}`}
-              className="font-body text-sm text-muted-foreground hover:text-foreground transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="font-body text-[13px] lg:text-sm text-muted-foreground hover:text-foreground transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap"
             >
               {link}
             </a>
@@ -60,30 +60,31 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Mobile menu */}
-          <div className="md:hidden">
+          {/* Mobile menu - visible only < 641px */}
+          <div className="sm:hidden">
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
                 <Button
                   type="button"
                   variant="ghost"
                   size="icon"
+                  className="text-primary hover:bg-primary/10"
                   aria-label={mobileOpen ? "Close menu" : "Open menu"}
                   aria-expanded={mobileOpen}
                 >
-                  <Menu />
+                  <Menu className="w-6 h-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[320px]">
-                <div className="flex items-center justify-between">
+              <SheetContent side="top" className="w-full h-auto bg-background border-b border-divider p-5 pt-16">
+                <div className="flex items-center justify-between mb-8">
                   <SheetTitle className="font-display tracking-[0.25em] text-primary">VESPER</SheetTitle>
                 </div>
-                <nav className="mt-8 flex flex-col gap-1">
+                <nav className="flex flex-col gap-2">
                   {mobileLinks.map((l) => (
                     <SheetClose asChild key={l.href}>
                       <a
                         href={l.href}
-                        className="rounded-md px-3 py-2 font-body text-sm text-foreground hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                        className="rounded-md px-3 py-3 font-body text-base text-foreground hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                       >
                         {l.label}
                       </a>
@@ -95,7 +96,7 @@ const Navbar = () => {
                   <SheetClose asChild>
                     <a
                       href="#cta"
-                      className="inline-flex w-full items-center justify-center rounded-sm bg-primary px-6 py-3 font-body text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                      className="inline-flex w-full items-center justify-center rounded-sm bg-primary px-6 py-4 font-body text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
                       Request Briefing
                     </a>
@@ -105,12 +106,12 @@ const Navbar = () => {
             </Sheet>
           </div>
 
-          {/* CTA */}
+          {/* CTA - visible on all sizes, shrinks on mobile */}
           <a
             href="#cta"
-            className="relative font-body text-sm font-medium px-5 py-2 border border-primary text-primary rounded-sm hover:bg-primary hover:text-primary-foreground transition-all duration-300 overflow-hidden group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className="relative font-body text-[12px] sm:text-sm font-medium px-3 sm:px-5 py-1.5 sm:py-2 border border-primary text-primary rounded-sm hover:bg-primary hover:text-primary-foreground transition-all duration-300 overflow-hidden group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
-            <span className="relative z-10">Request Briefing</span>
+            <span className="relative z-10 whitespace-nowrap">Request Briefing</span>
             <div
               className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/20 to-transparent animate-shimmer bg-[length:200%_100%] opacity-0 group-hover:opacity-100"
               style={{ animationDelay: "0.5s" }}

@@ -8,13 +8,13 @@ const LogosBar = () => {
   return (
     <section
       ref={ref}
-      className={`relative py-16 overflow-hidden transition-all duration-700 ${
+      className={`relative fluid-py transition-all duration-700 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
       }`}
     >
       <div className="absolute inset-0 dot-grid-bg opacity-15" />
 
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto fluid-px">
         <div className="border-t border-divider pt-10">
           <p
             className={`font-mono text-[11px] tracking-[0.15em] text-muted-foreground uppercase text-center mb-10 transition-all duration-700 ${

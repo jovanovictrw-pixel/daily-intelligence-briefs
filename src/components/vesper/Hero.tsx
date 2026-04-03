@@ -19,21 +19,21 @@ const Hero = () => {
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >
-        {/* Left column - 60% */}
-        <div className="lg:col-span-3 space-y-8">
-          <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-semibold leading-[1.1] text-foreground">
+        {/* Left column - Headline & CTA */}
+        <div className="lg:col-span-3 space-y-8 text-center sm:text-left">
+          <h1 className="font-display text-[clamp(2.5rem,8vw,4rem)] sm:text-5xl lg:text-7xl font-semibold leading-[1.1] text-foreground">
             Your team's intelligence briefing.{" "}
             <span className="text-primary italic">Automated.</span>
           </h1>
 
-          <p className="font-body text-base sm:text-lg text-muted-foreground max-w-xl leading-relaxed">
+          <p className="font-body text-base sm:text-lg text-muted-foreground sm:max-w-xl mx-auto sm:mx-0 leading-relaxed">
             Every morning, every person on your revenue team wakes up to a
             personalized brief — competitor moves, buyer signals, account
             activity — compiled overnight from 10,000+ sources. No dashboards.
             No digging. Just the signal that matters to them.
           </p>
 
-          <div className="flex flex-wrap items-center gap-4 pt-2">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 pt-2">
             <a
               href="#cta"
               className="font-body text-sm font-semibold px-7 py-3 bg-primary text-primary-foreground rounded-sm hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
@@ -50,9 +50,9 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Right column - 40% animated briefing card */}
-        <div className="lg:col-span-2">
-          <div className="relative">
+        {/* Right column - animated briefing card */}
+        <div className="lg:col-span-2 mt-8 sm:mt-0 max-w-md mx-auto lg:max-w-none">
+          <div className="relative mt-8 sm:mt-0">
             <div className="bg-card border border-divider rounded-lg overflow-hidden shadow-2xl shadow-primary/5">
               {/* Gold top border */}
               <div className="h-[2px] bg-gradient-to-r from-primary via-primary/60 to-transparent" />

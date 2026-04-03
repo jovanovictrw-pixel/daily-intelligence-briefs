@@ -34,14 +34,14 @@ const PricingSection = () => {
     <section
       id="pricing"
       ref={ref}
-      className={`relative py-24 overflow-hidden transition-all duration-700 ${
+      className={`relative fluid-py transition-all duration-700 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
       }`}
     >
       <div className="absolute inset-0 bg-card/20" />
       <div className="absolute inset-0 noise-overlay opacity-[0.22]" />
 
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto fluid-px">
         <p
           className={`section-label mb-6 transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
@@ -59,7 +59,7 @@ const PricingSection = () => {
           Priced per team, not per seat chaos.
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {plans.map((plan, i) => (
             <div
               key={plan.name}

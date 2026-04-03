@@ -7,7 +7,7 @@ const SampleBriefSection = () => {
     <section
       id="sample-brief"
       ref={ref}
-      className={`relative py-24 overflow-hidden transition-all duration-700 ${
+      className={`relative fluid-py overflow-hidden transition-all duration-700 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
       }`}
     >
@@ -15,7 +15,7 @@ const SampleBriefSection = () => {
       <div className="absolute inset-0 bg-card/30" />
       <div className="absolute inset-0 noise-overlay opacity-[0.35]" />
 
-      <div className="relative max-w-7xl mx-auto px-6">
+      <div className="relative max-w-7xl mx-auto fluid-px">
         <p className="section-label mb-6">Sample Brief</p>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
@@ -88,7 +88,7 @@ const SampleBriefSection = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
                     {
                       title: "Market movement",

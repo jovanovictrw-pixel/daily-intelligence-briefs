@@ -73,6 +73,27 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'IBM Plex Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Responsive image/SVG constraints */
+  img, svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .fluid-padding {
+    padding: clamp(60px, 10vw, 140px) clamp(20px, 5vw, 80px);
+  }
+
+  .fluid-px {
+    padding-left: clamp(20px, 5vw, 80px);
+    padding-right: clamp(20px, 5vw, 80px);
+  }
+
+  .fluid-py {
+    padding-top: clamp(60px, 10vw, 140px);
+    padding-bottom: clamp(60px, 10vw, 140px);
   }
 
   h1, h2, h3, h4, h5, h6 {
